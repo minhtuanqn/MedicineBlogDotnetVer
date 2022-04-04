@@ -1,4 +1,5 @@
 ﻿using Data.Database;
+using Data.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
@@ -34,7 +35,7 @@ namespace Data.Repository
                 {
                     await dbContext.DisposeAsync();
                 }
-                throw new DataException(e.Message);
+                throw new SQLException(e.Message);
             }
         }
 
@@ -50,7 +51,7 @@ namespace Data.Repository
                 {
                     await dbContext.DisposeAsync();
                 }
-                throw new DataException(e.Message);
+                throw new SQLException(e.Message);
             }
         }
 
@@ -76,7 +77,7 @@ namespace Data.Repository
                 {
                     await dbContext.DisposeAsync();
                 }
-                throw new DataException(e.Message);
+                throw new SQLException(e.Message);
             }
         }
 
@@ -90,7 +91,7 @@ namespace Data.Repository
                     await dbContext.SaveChangesAsync();
                     return (T)entry.Entity;
                 }
-                throw new DataException("System error");
+                throw new SQLException("System error");
             }
             catch (Exception e)
             {
@@ -98,7 +99,7 @@ namespace Data.Repository
                 {
                     await dbContext.DisposeAsync();
                 }
-                throw new DataException(e.Message);
+                throw new SQLException(e.Message);
             }
         }
 
@@ -112,7 +113,7 @@ namespace Data.Repository
                     await dbContext.SaveChangesAsync();
                     return (T)entry.Entity;
                 }
-                throw new DataException("System error");
+                throw new SQLException("System error");
             }
             catch(Exception e)
             {
@@ -120,7 +121,7 @@ namespace Data.Repository
                 {
                     await dbContext.DisposeAsync();
                 }
-                throw new DataException(e.Message);
+                throw new SQLException(e.Message);
             }
         }
     }

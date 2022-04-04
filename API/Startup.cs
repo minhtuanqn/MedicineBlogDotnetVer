@@ -43,6 +43,8 @@ namespace API
             services.AddControllers();
             services.AddScoped<ITopicRepository, TopicRepository>();
             services.AddScoped<ITopicService, TopicService>();
+            services.AddScoped<IPostRepository, PostRepository>();
+            services.AddScoped<IPostService, PostService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

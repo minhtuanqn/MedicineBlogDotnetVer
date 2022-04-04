@@ -1,5 +1,6 @@
 ﻿using API.Model;
 using Business.Exceptions;
+using Data.Exceptions;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
