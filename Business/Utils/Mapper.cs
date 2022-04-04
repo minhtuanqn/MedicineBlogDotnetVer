@@ -12,8 +12,12 @@ namespace Business.Utils
             {
                 cfg.CreateMap<Topic, TopicDTO>();
                 cfg.CreateMap<TopicDTO, Topic>();
-                cfg.CreateMap<CreateTopicDTO, TopicDTO>();
-                cfg.CreateMap<UpdateTopicDTO, TopicDTO>();
+                cfg.CreateMap<CreateTopicDTO, Topic>();
+                cfg.CreateMap<UpdateTopicDTO, Topic>();
+                cfg.CreateMap<Post, PostDTO>();
+                cfg.CreateMap<PostDTO, Post>();
+                cfg.CreateMap<CreatePostDTO, Post>();
+                cfg.CreateMap<UpdatePostDTO, Post>();
             });
             return configuration.CreateMapper();
         }

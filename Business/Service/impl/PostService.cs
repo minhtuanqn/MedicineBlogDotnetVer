@@ -1,0 +1,77 @@
+﻿using Business.Dto;
+using Business.Exceptions;
+using Business.Utils;
+using Data.Entity;
+using Data.Repository;
+using System;
+using System.Threading.Tasks;
+
+namespace Business.Service.impl
+{
+    public class PostService : IPostService
+    {
+        private IPostRepository postRepository;
+        public PostService(IPostRepository postRepository)
+        {
+            this.postRepository = postRepository;
+        }
+
+        public async Task<PostDTO> CreatePostAsync(CreatePostDTO dto)
+        {
+            Post existedPost = postRepository.FindPostByTitle(dto.title);
+            if (existedPost != null)
+            {
+                throw new DuplicateEntityException("Duplicated title of post");
+            }
+            
+            Post createdPost = Mapper.GetMapper().Map<Post>(dto);
+            createdPost.id = Guid.NewGuid();
+            createdPost.status = true;
+            createdPost.createDate = DateTime.Now.ToString();
+            Post insertedPost = await postRepository.AddAsync(createdPost);
+            return Mapper.GetMapper().Map<PostDTO>(insertedPost);
+        }
+
+        public async Task<PostDTO> DeletePostByIdAsync(Guid id)
+        {
+            Post existedPost = await postRepository.FindByIdAsync(id);
+            if (existedPost != null && existedPost.status)
+            {
+                existedPost.status = false;
+                Post deletedPost = await postRepository.UpdateAsync(existedPost);
+                return Mapper.GetMapper().Map<PostDTO>(deletedPost);
+            }
+            throw new NotFoundEntityException("Not found post with id");
+        }
+
+        public async Task<PostDTO> FindPostByIdAsync(Guid id)
+        {
+            Post post = await postRepository.FindByIdAsync(id);
+            if (post != null && post.status)
+            {
+                return Mapper.GetMapper().Map<PostDTO>(post);
+            }
+
+            throw new NotFoundEntityException("Not found post with id");
+        }
+
+        public async Task<PostDTO> UpdatePostAsync(UpdatePostDTO dto)
+        {
+            Post existedPostId = await postRepository.FindByIdAsync(dto.id);
+            if (existedPostId != null && existedPostId.status)
+            {
+                Post existPostTitle = postRepository.FindPostByTitleAndNotId(dto.id, dto.title);
+                if (existPostTitle == null)
+                {
+                    existedPostId.title = dto.title;
+                    existedPostId.content = dto.content;
+                    existedPostId.tagIds = dto.tagIds;
+                    Post updatedPost = await postRepository.UpdateAsync(existedPostId);
+                    return Mapper.GetMapper().Map<PostDTO>(updatedPost);
+                }
+                throw new DuplicateEntityException("Duplicated title of post");
+            }
+            throw new NotFoundEntityException("Not found post with id");
+        }
+    }
+}

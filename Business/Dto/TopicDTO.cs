@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 
 namespace Business.Dto
 {
@@ -10,6 +11,7 @@ namespace Business.Dto
 
         public string description { get; set; }
 
+        [JsonIgnore]
         public bool status { get; set; }
     }
 }
