@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Threading.Tasks;
 
 namespace Data.Repository
@@ -33,7 +34,7 @@ namespace Data.Repository
                 {
                     await dbContext.DisposeAsync();
                 }
-                throw new Exception(e.Message);
+                throw new DataException(e.Message);
             }
         }
 
@@ -49,33 +50,33 @@ namespace Data.Repository
                 {
                     await dbContext.DisposeAsync();
                 }
-                throw new Exception(e.Message);
+                throw new DataException(e.Message);
             }
         }
 
-        public async Task<T> DeleteByIdAsync(Guid key)
+        public async Task<bool> DeleteByIdAsync(Guid key)
         {
             try
             {
                 T entity = await entities.FindAsync(key);
-                if(entity != null)
+                if (entity != null)
                 {
                     EntityEntry entry = entities.Remove(entity);
-                    if(entry.State == EntityState.Deleted)
+                    if (entry.State == EntityState.Deleted)
                     {
                         await dbContext.SaveChangesAsync();
-                        return (T)entry.Entity;
+                        return true;
                     }
                 }
-                return null;
+                return false;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                if(dbContext != null)
+                if (dbContext != null)
                 {
                     await dbContext.DisposeAsync();
                 }
-                throw new Exception(e.Message);
+                throw new DataException(e.Message);
             }
         }
 
@@ -89,7 +90,7 @@ namespace Data.Repository
                     await dbContext.SaveChangesAsync();
                     return (T)entry.Entity;
                 }
-                return null;
+                throw new DataException("System error");
             }
             catch (Exception e)
             {
@@ -97,7 +98,7 @@ namespace Data.Repository
                 {
                     await dbContext.DisposeAsync();
                 }
-                throw new Exception(e.Message);
+                throw new DataException(e.Message);
             }
         }
 
@@ -111,7 +112,7 @@ namespace Data.Repository
                     await dbContext.SaveChangesAsync();
                     return (T)entry.Entity;
                 }
-                return null;
+                throw new DataException("System error");
             }
             catch(Exception e)
             {
@@ -119,7 +120,7 @@ namespace Data.Repository
                 {
                     await dbContext.DisposeAsync();
                 }
-                throw new Exception(e.Message);
+                throw new DataException(e.Message);
             }
         }
     }

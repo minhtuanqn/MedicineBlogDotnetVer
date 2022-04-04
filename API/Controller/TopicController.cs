@@ -20,75 +20,29 @@ namespace API.Controller
         [HttpGet("{id}")]
         public async Task<IActionResult> FindTopicById(Guid id)
         {
-            try
-            {
-                TopicDTO existedDTO = await topicService.FindTopicByIdAsync(id);
-                if(existedDTO != null)
-                {
-                    return FactoryUtils.createResponseModel().Status(200).Message("OK").Data(existedDTO).convertToJson();
-                }
-                return FactoryUtils.createResponseModel().Status(400).Message("Not found any result").Data(existedDTO).convertToJson();
-            }
-            catch (Exception e)
-            {
-                return FactoryUtils.createResponseModel().Status(400).Message("Error").Data(null).convertToJson();
-            }
-
+            TopicDTO existedDTO = await topicService.FindTopicByIdAsync(id);
+            return FactoryUtils.createResponseModel().StatusCode(200).Message("OK").Data(existedDTO).convertToJson();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTopicById(Guid id)
         {
-            try
-            {
-                TopicDTO dto = await topicService.DeleteTopicByIdAsync(id);
-                if (dto != null)
-                {
-                    return FactoryUtils.createResponseModel().Status(200).Message("Deleted successfully").Data(dto).convertToJson();
-                }
-                return FactoryUtils.createResponseModel().Status(400).Message("Not found topic").Data(dto).convertToJson();
-            }
-            catch (Exception e)
-            {
-                return FactoryUtils.createResponseModel().Status(400).Message("Error").Data(null).convertToJson();
-            }
-
+            TopicDTO dto = await topicService.DeleteTopicByIdAsync(id);
+            return FactoryUtils.createResponseModel().StatusCode(200).Message("Deleted successfully").Data(dto).convertToJson();
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateTopic(TopicDTO dto)
+        public async Task<IActionResult> CreateTopic(CreateTopicDTO dto)
         {
-            try
-            {
-                TopicDTO createdTopic = await topicService.CreateTopicAsync(dto);
-                if(createdTopic != null)
-                {
-                    return FactoryUtils.createResponseModel().Data(createdTopic).Status(200).Message("Created successfully").convertToJson();
-                }
-                return FactoryUtils.createResponseModel().Data(createdTopic).Status(400).Message("Bad request").convertToJson();
-            }
-            catch (Exception e)
-            {
-                return FactoryUtils.createResponseModel().Data(null).Status(400).Message("Error").convertToJson();
-            }
+            TopicDTO createdTopic = await topicService.CreateTopicAsync(dto);
+            return FactoryUtils.createResponseModel().Data(createdTopic).StatusCode(200).Message("Created successfully").convertToJson();
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateTopic(TopicDTO dto)
+        public async Task<IActionResult> UpdateTopic(UpdateTopicDTO dto)
         {
-            try
-            {
-                TopicDTO updatedTopic = await topicService.UpdateTopicAsync(dto);
-                if (updatedTopic != null)
-                {
-                    return FactoryUtils.createResponseModel().Data(updatedTopic).Status(200).Message("Update successfully").convertToJson();
-                }
-                return FactoryUtils.createResponseModel().Data(updatedTopic).Status(400).Message("Bad request").convertToJson();
-            }
-            catch (Exception e)
-            {
-                return FactoryUtils.createResponseModel().Data(null).Status(400).Message("Error").convertToJson();
-            }
+            TopicDTO updatedTopic = await topicService.UpdateTopicAsync(dto);
+            return FactoryUtils.createResponseModel().Data(updatedTopic).StatusCode(200).Message("Update successfully").convertToJson();
         }
     }
 }

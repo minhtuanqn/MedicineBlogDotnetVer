@@ -1,4 +1,5 @@
 ﻿using Business.Dto;
+using Business.Exceptions;
 using Business.Utils;
 using Data.Entity;
 using Data.Repository;
@@ -16,50 +17,59 @@ namespace Business.Service.impl
             this.topicRepository = topicRepository;
         }
 
-        public async Task<TopicDTO> CreateTopicAsync(TopicDTO dto)
+        public async Task<TopicDTO> CreateTopicAsync(CreateTopicDTO dto)
         {
-            Topic topic = Mapper.GetMapper().Map<Topic>(dto);
-            topic.id = Guid.NewGuid();
-            topic.status = true;
-            Topic insertedTopic = await topicRepository.AddAsync(topic);
+            Topic existedTopic = topicRepository.FindTopicByName(dto.name);
+            if(existedTopic != null)
+            {
+                throw new DuplicateEntityException("Duplicated name of topic");
+            }
+            Topic createdTopic = Mapper.GetMapper().Map<Topic>(dto);
+            createdTopic.id = Guid.NewGuid();
+            createdTopic.status = true;
+            Topic insertedTopic = await topicRepository.AddAsync(createdTopic);
             return Mapper.GetMapper().Map<TopicDTO>(insertedTopic);
         }
 
-        public async Task<TopicDTO> UpdateTopicAsync(TopicDTO dto)
+        public async Task<TopicDTO> UpdateTopicAsync(UpdateTopicDTO dto)
         {
-            Topic existedTopic = await topicRepository.FindByIdAsync(dto.id);
-            if(existedTopic != null)
+            Topic existedTopicId = await topicRepository.FindByIdAsync(dto.id);
+            if(existedTopicId != null && existedTopicId.status)
             {
-                existedTopic.name = dto.name;
-                existedTopic.description = dto.description;
-                Topic updatedTopic = await topicRepository.UpdateAsync(existedTopic);
-                return Mapper.GetMapper().Map<TopicDTO>(updatedTopic);
+                Topic existTopicName = topicRepository.FindTopicByNameAndNotId(dto.id, dto.name);
+                if(existTopicName == null)
+                {
+                    existedTopicId.name = dto.name;
+                    existedTopicId.description = dto.description;
+                    Topic updatedTopic = await topicRepository.UpdateAsync(existedTopicId);
+                    return Mapper.GetMapper().Map<TopicDTO>(updatedTopic);
+                }
+                throw new DuplicateEntityException("Duplicated name of topic");
             }
-            return null;   
+            throw new NotFoundEntityException("Not found topic with id");
         }
 
         public async Task<TopicDTO> DeleteTopicByIdAsync(Guid id)
         {
             Topic existedTopic = await topicRepository.FindByIdAsync(id);
-            if (existedTopic != null)
+            if (existedTopic != null && existedTopic.status)
             {
                 existedTopic.status = false;
                 Topic deletedTopic = await topicRepository.UpdateAsync(existedTopic);
                 return Mapper.GetMapper().Map<TopicDTO>(deletedTopic);
             }
-            return null;
+            throw new NotFoundEntityException("Not found topic with id");
         }
 
         public async Task<TopicDTO> FindTopicByIdAsync(Guid id)
         {
             Topic topic = await topicRepository.FindByIdAsync(id);
-            if (topic != null)
+            if (topic != null && topic.status)
             {
-                TopicDTO dto = Mapper.GetMapper().Map<TopicDTO>(topic);
-                return dto;
+                return Mapper.GetMapper().Map<TopicDTO>(topic);
             }
-            
-            return null;
+
+            throw new NotFoundEntityException("Not found topic with id");
         }        
     }
 }
