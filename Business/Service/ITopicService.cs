@@ -7,9 +7,9 @@ namespace Business.Service
     public interface ITopicService
     {
         public Task<TopicDTO> FindTopicByIdAsync(Guid id);
-        public Task<TopicDTO> CreateTopicAsync(TopicDTO dto);
+        public Task<TopicDTO> CreateTopicAsync(CreateTopicDTO dto);
         public Task<TopicDTO> DeleteTopicByIdAsync(Guid id);
-        public Task<TopicDTO> UpdateTopicAsync(TopicDTO dto);
+        public Task<TopicDTO> UpdateTopicAsync(UpdateTopicDTO dto);
         
     }
 

@@ -1,3 +1,4 @@
+using API.Middlewares;
 using Business.Service;
 using Business.Service.impl;
 using Data.Database;
@@ -53,7 +54,7 @@ namespace API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MedicineBlog_ v1"));
             }
-
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthentication();

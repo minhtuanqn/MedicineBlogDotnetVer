@@ -7,6 +7,8 @@ namespace Data.Repository
 {
     public interface ITopicRepository : IGenericRepository<Topic>
     {
-        
+        public Topic FindTopicByName(string name);
+
+        public Topic FindTopicByNameAndNotId(Guid id, string name);
     }
 }

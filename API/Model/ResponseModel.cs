@@ -10,21 +10,21 @@ namespace API.Model
     {
         public ResponseModel() { }
 
-        public ResponseModel Status(int statusCode)
+        public ResponseModel StatusCode(int status)
         {
-            _statusCode = statusCode;
+            statusCode = status;
             return this;
         }
 
-        public ResponseModel Data(object data)
+        public ResponseModel Data(object responseData)
         {
-            _data = data;
+            data = responseData;
             return this;
         }
 
-        public ResponseModel  Message(string message)
+        public ResponseModel Message(string responseMessage)
         {
-            _message = message;
+            message = responseMessage;
             return this;
         }
 
@@ -33,11 +33,11 @@ namespace API.Model
             return new JsonResult(this);
         }
 
-        public int _statusCode { get; set; }
+        public int statusCode { get; set; }
 
-        public object _data { get; set; }
+        public object data { get; set; }
 
-        public string _message { get; set; }
+        public string message { get; set; }
 
     }
 }
