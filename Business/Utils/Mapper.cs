@@ -18,6 +18,10 @@ namespace Business.Utils
                 cfg.CreateMap<PostDTO, Post>();
                 cfg.CreateMap<CreatePostDTO, Post>();
                 cfg.CreateMap<UpdatePostDTO, Post>();
+                cfg.CreateMap<Tag, TagDTO>();
+                cfg.CreateMap<TagDTO, Tag>();
+                cfg.CreateMap<CreateTagDTO, Tag>();
+                cfg.CreateMap<UpdateTagDTO, Tag>();
             });
             return configuration.CreateMapper();
         }

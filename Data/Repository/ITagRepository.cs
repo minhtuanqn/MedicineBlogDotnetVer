@@ -9,5 +9,6 @@ namespace Data.Repository
 {
     public interface ITagRepository : IGenericRepository<Tag>
     {
+        public Tag FindTagByName(string name);
     }
 }
