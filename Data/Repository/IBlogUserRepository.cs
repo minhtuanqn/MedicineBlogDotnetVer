@@ -9,6 +9,6 @@ namespace Data.Repository
 {
     public interface IBlogUserRepository : IGenericRepository<BlogUser>
     {
-
+        public BlogUser FindUserByEmail(string email);
     }
 }
