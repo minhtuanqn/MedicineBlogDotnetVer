@@ -22,6 +22,10 @@ namespace Business.Utils
                 cfg.CreateMap<TagDTO, Tag>();
                 cfg.CreateMap<CreateTagDTO, Tag>();
                 cfg.CreateMap<UpdateTagDTO, Tag>();
+                cfg.CreateMap<BlogUser, BlogUserDTO>();
+                cfg.CreateMap<BlogUserDTO, BlogUser>();
+                cfg.CreateMap<CreateBlogUserDTO, BlogUser>();
+                cfg.CreateMap<UpdateBlogUserDTO, BlogUser>();
             });
             return configuration.CreateMapper();
         }
