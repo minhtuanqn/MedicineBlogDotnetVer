@@ -34,14 +34,22 @@ namespace API.Middlewares
                     case SQLException e:
                         errorMap.Add("System error", e.message);
                         responseModel.statusCode = 500;
+                        response.StatusCode = 500;
                         break;
-                    case BusinessException e:
+                    case NotFoundEntityException e:
                         errorMap.Add("Bad request", e.message);
                         responseModel.statusCode = 400;
+                        response.StatusCode = 400;
+                        break;
+                    case DuplicateEntityException e:
+                        errorMap.Add("Bad request", e.message);
+                        responseModel.statusCode = 400;
+                        response.StatusCode = 400;
                         break;
                     default:
                         errorMap.Add("System error", "Oops! We will fix as soon as posible");
                         responseModel.statusCode = 500;
+                        response.StatusCode = 500;
                         break;
                 }
                 responseModel.data = errorMap;

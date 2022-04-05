@@ -11,19 +11,21 @@ namespace Business.Service.impl
     public class PostService : IPostService
     {
         private IPostRepository postRepository;
-        public PostService(IPostRepository postRepository)
+        private ITopicRepository topicRepository;
+
+        public PostService(IPostRepository postRepository, ITopicRepository topicRepository)
         {
             this.postRepository = postRepository;
+            this.topicRepository = topicRepository;
         }
 
         public async Task<PostDTO> CreatePostAsync(CreatePostDTO dto)
         {
+            Topic existedTopic = await topicRepository.FindByIdAsync(dto.topicId);
+            if (existedTopic == null) throw new NotFoundEntityException("Not found topic");
             Post existedPost = postRepository.FindPostByTitle(dto.title);
-            if (existedPost != null)
-            {
-                throw new DuplicateEntityException("Duplicated title of post");
-            }
-            
+            if (existedPost != null) throw new DuplicateEntityException("Duplicated title of post");
+
             Post createdPost = Mapper.GetMapper().Map<Post>(dto);
             createdPost.id = Guid.NewGuid();
             createdPost.status = true;

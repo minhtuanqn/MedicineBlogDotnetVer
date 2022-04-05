@@ -10,5 +10,7 @@ namespace Data.Database
         public DbSet<Topic> topics { get; set; }
 
         public DbSet<Post> posts { get; set; }
+
+        public DbSet<Tag> tags { get; set; }
     }
 }
