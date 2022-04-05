@@ -14,6 +14,7 @@ namespace Business.Dto
 
         public string role { get; set; }
 
+        [JsonIgnore]
         public bool status { get; set; }
     }
 }
