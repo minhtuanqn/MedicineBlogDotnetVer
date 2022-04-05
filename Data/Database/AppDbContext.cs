@@ -15,6 +15,8 @@ namespace Data.Database
 
         public DbSet<Comment> comments { get; set; }
 
+        public DbSet<Comment> comments { get; set; }
+
         public DbSet<BlogUser> users { get; set; }
     }
 }
