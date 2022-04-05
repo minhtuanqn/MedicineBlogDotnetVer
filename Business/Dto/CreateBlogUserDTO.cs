@@ -17,10 +17,10 @@ namespace Business.Dto
         public string phone { get; set; }
 
         [Required(ErrorMessage = "Name can not be null")]
-        [StringLength(100, ErrorMessage = "Max length of topic is 100 characters")]
+        [StringLength(100, ErrorMessage = "Max length of user name is 100 characters")]
         public string name { get; set; }
 
-        [Required(ErrorMessage = "Id can not be null")]
+        [Required(ErrorMessage = "Role can not be null")]
         public string role { get; set; }
 
     }
