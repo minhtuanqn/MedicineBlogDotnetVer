@@ -17,9 +17,9 @@ namespace API.Controller
         }
 
         [HttpGet("{name}")]
-        public IActionResult FindTagByName(string name)
+        public async Task<IActionResult> FindTagByName(string name)
         {
-            TagDTO existedDTO = tagService.FindTagByName(name);
+            TagDTO existedDTO = await tagService.FindTagByName(name);
             return FactoryUtils.createResponseModel().Message("OK").Data(existedDTO).StatusCode(200).convertToJson();
         }
 

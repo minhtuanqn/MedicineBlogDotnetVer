@@ -3,10 +3,6 @@ using Business.Exceptions;
 using Business.Utils;
 using Data.Entity;
 using Data.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Business.Service.impl
@@ -43,7 +39,7 @@ namespace Business.Service.impl
             throw new NotFoundEntityException("Not found tag with name");
         }
 
-        public TagDTO FindTagByName(string name)
+        public async Task<TagDTO> FindTagByName(string name)
         {
             Tag tag = tagRepository.FindTagByName(name);
             if (tag != null && tag.status)

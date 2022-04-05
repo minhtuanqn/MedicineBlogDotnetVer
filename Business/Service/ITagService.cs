@@ -9,7 +9,7 @@ namespace Business.Service
 {
     public interface ITagService
     {
-        public TagDTO FindTagByName(string name);
+        public Task<TagDTO> FindTagByName(string name);
         public Task<TagDTO> CreateTagAsync(CreateTagDTO dto);
         public Task<TagDTO> DeleteTagByNameAsync(string name);
         public Task<TagDTO> UpdateTagAsync(UpdateTagDTO dto);
