@@ -39,7 +39,7 @@ namespace API.Controller
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateTopic(UpdateCommentDTO dto)
+        public async Task<IActionResult> UpdateComment(UpdateCommentDTO dto)
         {
             CommentDTO updatedComment = await commentService.UpdateCommentAsync(dto);
             return FactoryUtils.createResponseModel().Data(updatedComment).StatusCode(200).Message("Update successfully").convertToJson();
