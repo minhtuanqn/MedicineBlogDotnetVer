@@ -49,6 +49,10 @@ namespace API
             services.AddScoped<ITagService, TagService>();
             services.AddScoped<IBlogUserRepository, BlogUserRepository>();
             services.AddScoped<IBlogUserSevice, BlogUserService>();
+            services.AddScoped<ICommentRepository, CommentRepository>();
+            services.AddScoped<ICommentService, CommentService>();
+            services.AddScoped<IReferenceRepository, ReferenceRepository>();
+            services.AddScoped<IReferenceService, ReferenceService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
