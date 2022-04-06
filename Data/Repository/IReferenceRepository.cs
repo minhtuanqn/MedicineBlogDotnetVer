@@ -9,5 +9,8 @@ namespace Data.Repository
 {
     public interface IReferenceRepository : IGenericRepository<Reference>
     {
+        public Reference FindRefByName(string name);
+
+        public Reference FindRefByNameAndNotId(Guid id, string name);
     }
 }

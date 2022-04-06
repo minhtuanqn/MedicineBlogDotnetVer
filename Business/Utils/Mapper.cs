@@ -30,6 +30,10 @@ namespace Business.Utils
                 cfg.CreateMap<CommentDTO, Comment>();
                 cfg.CreateMap<CreateCommentDTO, Comment>();
                 cfg.CreateMap<UpdateCommentDTO, Comment>();
+                cfg.CreateMap<Reference, ReferenceDTO>();
+                cfg.CreateMap<ReferenceDTO, Reference>();
+                cfg.CreateMap<CreateReferenceDTO, Reference>();
+                cfg.CreateMap<UpdateReferenceDTO, Reference>();
             });
             return configuration.CreateMapper();
         }
