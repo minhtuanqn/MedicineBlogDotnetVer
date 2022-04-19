@@ -4,6 +4,7 @@ using Business.Utils;
 using Data.Entity;
 using Data.Repository;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Business.Service.impl
@@ -70,6 +71,17 @@ namespace Business.Service.impl
             }
 
             throw new NotFoundEntityException("Not found topic with id");
-        }        
+        }
+
+        public async Task<List<TopicDTO>> GetAllTopicAsync()
+        {
+            IEnumerable<Topic> topicsEnum = await topicRepository.GetAllAsync();
+            List<TopicDTO> dtos = new List<TopicDTO>();
+            foreach (Topic topic in topicsEnum)
+            {
+                dtos.Add(Mapper.GetMapper().Map<TopicDTO>(topic));
+            }
+            return dtos;
+        }
     }
 }

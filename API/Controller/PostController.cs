@@ -2,6 +2,7 @@
 using Business.Service;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace API.Controller
@@ -43,6 +44,13 @@ namespace API.Controller
         {
             PostDTO updatedPost = await postService.UpdatePostAsync(dto);
             return FactoryUtils.createResponseModel().Data(updatedPost).StatusCode(200).Message("Update successfully").convertToJson();
+        }
+
+        [HttpGet()]
+        public async Task<IActionResult> SearchPosts()
+        {
+            List<PostDTO> existedPosts = await postService.GetAllPostAsync();
+            return FactoryUtils.createResponseModel().StatusCode(200).Message("OK").Data(existedPosts).convertToJson();
         }
     }
 }

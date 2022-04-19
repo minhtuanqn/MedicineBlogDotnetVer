@@ -1,6 +1,7 @@
 ﻿using Business.Dto;
 using Business.Service;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace API.Controller
@@ -42,6 +43,13 @@ namespace API.Controller
         {
             TagDTO updatedTag = await tagService.UpdateTagAsync(dto);
             return FactoryUtils.createResponseModel().Data(updatedTag).StatusCode(200).Message("Update successfully").convertToJson();
+        }
+
+        [HttpGet()]
+        public async Task<IActionResult> SearchTags()
+        {
+            List<TagDTO> existedTags = await tagService.GetAllTagAsync();
+            return FactoryUtils.createResponseModel().StatusCode(200).Message("OK").Data(existedTags).convertToJson();
         }
     }
 }

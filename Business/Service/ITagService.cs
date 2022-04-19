@@ -13,5 +13,6 @@ namespace Business.Service
         public Task<TagDTO> CreateTagAsync(CreateTagDTO dto);
         public Task<TagDTO> DeleteTagByNameAsync(string name);
         public Task<TagDTO> UpdateTagAsync(UpdateTagDTO dto);
+        public Task<List<TagDTO>> GetAllTagAsync();
     }
 }

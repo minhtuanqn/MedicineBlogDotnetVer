@@ -2,6 +2,7 @@
 using Business.Service;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace API.Controller
@@ -44,5 +45,13 @@ namespace API.Controller
             TopicDTO updatedTopic = await topicService.UpdateTopicAsync(dto);
             return FactoryUtils.createResponseModel().Data(updatedTopic).StatusCode(200).Message("Update successfully").convertToJson();
         }
+
+        [HttpGet()]
+        public async Task<IActionResult> SearchTags()
+        {
+            List<TopicDTO> existedTopics = await topicService.GetAllTopicAsync();
+            return FactoryUtils.createResponseModel().StatusCode(200).Message("OK").Data(existedTopics).convertToJson();
+        }
+
     }
 }

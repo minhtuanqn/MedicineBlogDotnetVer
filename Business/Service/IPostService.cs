@@ -13,5 +13,6 @@ namespace Business.Service
         public Task<PostDTO> CreatePostAsync(CreatePostDTO dto);
         public Task<PostDTO> DeletePostByIdAsync(Guid id);
         public Task<PostDTO> UpdatePostAsync(UpdatePostDTO dto);
+        public Task<List<PostDTO>> GetAllPostAsync();
     }
 }

@@ -4,6 +4,7 @@ using Business.Utils;
 using Data.Entity;
 using Data.Repository;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Business.Service.impl
@@ -55,6 +56,17 @@ namespace Business.Service.impl
             }
 
             throw new NotFoundEntityException("Not found post with id");
+        }
+
+        public async Task<List<PostDTO>> GetAllPostAsync()
+        {
+            IEnumerable<Post> postsEnum = await postRepository.GetAllAsync();
+            List<PostDTO> dtos = new List<PostDTO>();
+            foreach(Post post in postsEnum)
+            {
+                dtos.Add(Mapper.GetMapper().Map<PostDTO>(post));
+            }
+            return dtos;
         }
 
         public async Task<PostDTO> UpdatePostAsync(UpdatePostDTO dto)

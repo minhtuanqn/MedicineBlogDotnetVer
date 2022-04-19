@@ -3,6 +3,7 @@ using Business.Exceptions;
 using Business.Utils;
 using Data.Entity;
 using Data.Repository;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Business.Service.impl
@@ -60,6 +61,17 @@ namespace Business.Service.impl
                 return Mapper.GetMapper().Map<TagDTO>(updatedTag);
             }
             throw new NotFoundEntityException("Not found tag with name");
+        }
+
+        public async Task<List<TagDTO>> GetAllTagAsync()
+        {
+            IEnumerable<Tag> tagsEnum = await tagRepository.GetAllAsync();
+            List<TagDTO> dtos = new List<TagDTO>();
+            foreach (Tag tag in tagsEnum)
+            {
+                dtos.Add(Mapper.GetMapper().Map<TagDTO>(tag));
+            }
+            return dtos;
         }
     }
 }
