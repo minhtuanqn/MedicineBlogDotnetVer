@@ -79,7 +79,10 @@ namespace Business.Service.impl
             List<TopicDTO> dtos = new List<TopicDTO>();
             foreach (Topic topic in topicsEnum)
             {
-                dtos.Add(Mapper.GetMapper().Map<TopicDTO>(topic));
+                if (topic.status)
+                {
+                    dtos.Add(Mapper.GetMapper().Map<TopicDTO>(topic));
+                } 
             }
             return dtos;
         }

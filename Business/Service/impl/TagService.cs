@@ -69,7 +69,10 @@ namespace Business.Service.impl
             List<TagDTO> dtos = new List<TagDTO>();
             foreach (Tag tag in tagsEnum)
             {
-                dtos.Add(Mapper.GetMapper().Map<TagDTO>(tag));
+                if(tag.status)
+                {
+                    dtos.Add(Mapper.GetMapper().Map<TagDTO>(tag));
+                }
             }
             return dtos;
         }

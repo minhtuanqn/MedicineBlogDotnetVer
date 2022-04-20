@@ -64,7 +64,10 @@ namespace Business.Service.impl
             List<PostDTO> dtos = new List<PostDTO>();
             foreach(Post post in postsEnum)
             {
-                dtos.Add(Mapper.GetMapper().Map<PostDTO>(post));
+                if(post.status)
+                {
+                    dtos.Add(Mapper.GetMapper().Map<PostDTO>(post));
+                }
             }
             return dtos;
         }
