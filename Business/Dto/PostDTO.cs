@@ -7,6 +7,8 @@ namespace Business.Dto
     {
         public Guid id { get; set; }
 
+        public string coverPhoto { get; set; }
+
         public string title { get; set; }
 
         public string content { get; set; }

@@ -8,6 +8,8 @@ namespace Business.Dto
         [Required(ErrorMessage = "Id can not be null")]
         public Guid id { get; set; }
 
+        public string coverPhoto { get; set; }
+
         [Required(ErrorMessage = "Title can not be null")]
         public string title { get; set; }
 

@@ -15,6 +15,9 @@ namespace Data.Entity
         [Column("id")]
         public Guid id { get; set; }
 
+        [Column("coverPhoto")]
+        public string coverPhoto { get; set; }
+
         [Column("title")]
         public string title { get; set; }
 

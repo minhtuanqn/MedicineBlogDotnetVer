@@ -5,6 +5,8 @@ namespace Business.Dto
 {
     public class CreatePostDTO
     {
+        public string coverPhoto { get; set; }
+
         [Required(ErrorMessage = "Title can not be null")]
         public string title { get; set; }
 
