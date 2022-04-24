@@ -1,6 +1,12 @@
 ﻿
 using Data.Database;
 using Data.Entity;
+using Data.Exceptions;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Data.Repository.impl
 {
@@ -11,6 +17,19 @@ namespace Data.Repository.impl
         public CommentRepository(AppDbContext dbContext) : base(dbContext)
         {
             this.dbContext = dbContext;
+        }
+
+        public async Task<List<Comment>> GetAllByPostIdAsync(Guid id)
+        {
+            try
+            {
+                IQueryable<Comment> query = dbContext.comments.Where(c => c.postId == id && c.status == true).AsNoTracking();
+                return await query.ToListAsync();
+            }
+            catch (Exception e)
+            {
+                throw new SQLException(e.Message);
+            }
         }
     }
 }

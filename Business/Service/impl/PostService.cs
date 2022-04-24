@@ -13,11 +13,13 @@ namespace Business.Service.impl
     {
         private IPostRepository postRepository;
         private ITopicRepository topicRepository;
+        private ICommentRepository commentRepository;
 
-        public PostService(IPostRepository postRepository, ITopicRepository topicRepository)
+        public PostService(IPostRepository postRepository, ITopicRepository topicRepository, ICommentRepository commentRepository)
         {
             this.postRepository = postRepository;
             this.topicRepository = topicRepository;
+            this.commentRepository = commentRepository;
         }
 
         public async Task<PostDTO> CreatePostAsync(CreatePostDTO dto)
@@ -52,7 +54,19 @@ namespace Business.Service.impl
             Post post = await postRepository.FindByIdAsync(id);
             if (post != null && post.status)
             {
-                return Mapper.GetMapper().Map<PostDTO>(post);
+                PostDTO postDTO = Mapper.GetMapper().Map<PostDTO>(post);
+                List<Comment> comments = await commentRepository.GetAllByPostIdAsync(id);
+                if(comments != null)
+                {
+                    Console.WriteLine("ok");
+                    List<CommentDTO> cmtDtos = new List<CommentDTO>();
+                    foreach(Comment comment in comments)
+                    {
+                        cmtDtos.Add(Mapper.GetMapper().Map<CommentDTO>(comment));
+                    }
+                    postDTO.comments = cmtDtos;
+                }
+                return postDTO;
             }
 
             throw new NotFoundEntityException("Not found post with id");

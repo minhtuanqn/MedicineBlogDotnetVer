@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Data.Entity;
+using System;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace Business.Dto
@@ -25,5 +27,7 @@ namespace Business.Dto
 
         [JsonIgnore]
         public bool status { get; set; }
+
+        public List<CommentDTO> comments { get; set; }
     }
 }
