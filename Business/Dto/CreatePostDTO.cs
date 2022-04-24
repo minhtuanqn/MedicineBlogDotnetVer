@@ -13,6 +13,9 @@ namespace Business.Dto
         [Required(ErrorMessage = "Content can not be null")]
         public string content { get; set; }
 
+        [Required(ErrorMessage = "Author can not be null")]
+        public Guid authorId { get; set; }
+
         public string tagIds { get; set; }
 
         [Required(ErrorMessage = "Topic id can not be null")]

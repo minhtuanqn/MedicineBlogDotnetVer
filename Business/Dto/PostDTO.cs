@@ -15,6 +15,10 @@ namespace Business.Dto
 
         public string createDate { get; set; }
 
+        public Guid authorId { get; set; }
+
+        public string authorName { get; set; }
+
         public string tagIds { get; set; }
 
         public Guid topicId { get; set; }

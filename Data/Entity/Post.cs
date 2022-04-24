@@ -27,6 +27,12 @@ namespace Data.Entity
         [Column("createDate")]
         public string createDate { get; set; }
 
+        [Column("authorId")]
+        public Guid authorId { get; set; }
+
+        [Column("authorName")]
+        public string authorName { get; set; }
+
         [Column("tagIds")]
         public string tagIds { get; set; }
 
