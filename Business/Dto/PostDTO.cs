@@ -28,6 +28,6 @@ namespace Business.Dto
         [JsonIgnore]
         public bool status { get; set; }
 
-        public List<CommentDTO> comments { get; set; }
+        public Dictionary<Guid, List<CommentDTO>> comments { get; set; }
     }
 }

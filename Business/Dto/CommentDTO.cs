@@ -14,6 +14,8 @@ namespace Business.Dto
 
         public Guid userId { get; set; }
 
+        public string userName { get; set; }
+
         public string createdDate { get; set; }
 
         public bool status { get; set; }

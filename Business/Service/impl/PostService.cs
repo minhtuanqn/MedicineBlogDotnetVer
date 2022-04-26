@@ -5,6 +5,7 @@ using Data.Entity;
 using Data.Repository;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Business.Service.impl
@@ -55,14 +56,24 @@ namespace Business.Service.impl
             if (post != null && post.status)
             {
                 PostDTO postDTO = Mapper.GetMapper().Map<PostDTO>(post);
-                List<Comment> comments = await commentRepository.GetAllByPostIdAsync(id);
-                if(comments != null)
+                List<Comment> rootCmts = await commentRepository.GetAllRootCmtByPostIdAsync(id);
+                if(rootCmts != null)
                 {
-                    Console.WriteLine("ok");
-                    List<CommentDTO> cmtDtos = new List<CommentDTO>();
-                    foreach(Comment comment in comments)
+                    Console.WriteLine(rootCmts.Count);
+                    Dictionary<Guid, List<CommentDTO>> cmtDtos = new Dictionary<Guid, List<CommentDTO>>();
+                    foreach (Comment rootCmt in rootCmts)
                     {
-                        cmtDtos.Add(Mapper.GetMapper().Map<CommentDTO>(comment));
+                        List<Comment> subCmts = await commentRepository.GetAllCmtByRootIdAsync(rootCmt.id);
+                        List<CommentDTO> dtosDict = new List<CommentDTO>();
+                        if (subCmts != null)
+                        {
+                            foreach (Comment subCmt in subCmts)
+                            {
+                                dtosDict.Add(Mapper.GetMapper().Map<CommentDTO>(subCmt));
+                            }    
+                        }
+                        List<CommentDTO> sortedList = dtosDict.OrderBy(o => o.createdDate).ToList();
+                        cmtDtos.Add(rootCmt.id, sortedList);
                     }
                     postDTO.comments = cmtDtos;
                 }

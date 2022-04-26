@@ -27,6 +27,9 @@ namespace Data.Entity
         [Column("userId")]
         public Guid userId { get; set; }
 
+        [Column("userName")]
+        public string userName { get; set; }
+
         [Column("createdDate")]
         public string createdDate { get; set; }
 
