@@ -1,6 +1,7 @@
 ﻿using Data.Database;
 using Data.Entity;
 using Data.Exceptions;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,19 @@ namespace Data.Repository.impl
             try
             {
                 Tag tag = dbContext.tags.Where(tag => tag.name == name).FirstOrDefault();
+                return tag;
+            }
+            catch (Exception e)
+            {
+                throw new SQLException(e.Message);
+            }
+        }
+
+        public Tag FindTagById(string id)
+        {
+            try
+            {
+                Tag tag = dbContext.tags.Where(tag => tag.description == id).FirstOrDefault();
                 return tag;
             }
             catch (Exception e)

@@ -15,5 +15,6 @@ namespace Business.Service
         public Task<PostDTO> UpdatePostAsync(UpdatePostDTO dto);
         public Task<List<PostDTO>> GetAllPostAsync();
         public Task<List<PostDTO>> GetAllPostByTopicNameAsync(string topicId);
+        public Task<List<PostDTO>> GetAllPostByTagIdAsync(string tagId);
     }
 }

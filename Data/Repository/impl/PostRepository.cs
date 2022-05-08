@@ -57,5 +57,18 @@ namespace Data.Repository.impl
                 throw new SQLException(e.Message);
             }
         }
+
+        public async Task<List<Post>> FindPostByTagNameAsync(string tagName)
+        {
+            try
+            {
+                IQueryable<Post> query = dbContext.posts.Where(post => post.tagIds.Contains(tagName) && post.status == true).AsNoTracking();
+                return await query.ToListAsync();
+            }
+            catch (Exception e)
+            {
+                throw new SQLException(e.Message);
+            }
+        }
     }
 }

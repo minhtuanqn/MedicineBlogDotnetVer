@@ -11,6 +11,8 @@ namespace Data.Repository
 
         public Post FindPostByTitleAndNotId(Guid id, string title);
 
-        public Task<List<Post>> FindPostByTopicNameAsync(string id);
+        public Task<List<Post>> FindPostByTopicNameAsync(string topicName);
+
+        public Task<List<Post>> FindPostByTagNameAsync(string tagName);
     }
 }

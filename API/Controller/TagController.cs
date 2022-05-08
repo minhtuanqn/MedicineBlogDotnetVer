@@ -11,10 +11,12 @@ namespace API.Controller
     public class TagController
     {
         private readonly ITagService tagService;
+        private readonly IPostService postService;
 
-        public TagController(ITagService tagService)
+        public TagController(ITagService tagService, IPostService postService)
         {
             this.tagService = tagService;
+            this.postService = postService;
         }
 
         [HttpGet("{name}")]
@@ -50,6 +52,13 @@ namespace API.Controller
         {
             List<TagDTO> existedTags = await tagService.GetAllTagAsync();
             return FactoryUtils.createResponseModel().StatusCode(200).Message("OK").Data(existedTags).convertToJson();
+        }
+
+        [HttpGet("{tagId}/posts/")]
+        public async Task<IActionResult> SearchPostsByTagId(string tagId)
+        {
+            List<PostDTO> existedPosts = await postService.GetAllPostByTagIdAsync(tagId);
+            return FactoryUtils.createResponseModel().StatusCode(200).Message("OK").Data(existedPosts).convertToJson();
         }
     }
 }

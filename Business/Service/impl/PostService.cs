@@ -15,12 +15,15 @@ namespace Business.Service.impl
         private IPostRepository postRepository;
         private ITopicRepository topicRepository;
         private ICommentRepository commentRepository;
+        private ITagRepository tagRepository;
 
-        public PostService(IPostRepository postRepository, ITopicRepository topicRepository, ICommentRepository commentRepository)
+        public PostService(IPostRepository postRepository, ITopicRepository topicRepository,
+            ICommentRepository commentRepository, ITagRepository tagRepository)
         {
             this.postRepository = postRepository;
             this.topicRepository = topicRepository;
             this.commentRepository = commentRepository;
+            this.tagRepository = tagRepository;
         }
 
         public async Task<PostDTO> CreatePostAsync(CreatePostDTO dto)
@@ -96,6 +99,25 @@ namespace Business.Service.impl
                 }
             }
             return dtos;
+        }
+
+        public async Task<List<PostDTO>> GetAllPostByTagIdAsync(string tagId)
+        {
+            Tag existedTag = tagRepository.FindTagById(tagId);
+            List<PostDTO> postsDTO = new List<PostDTO>();
+            if(existedTag != null && existedTag.status)
+            {
+                List<Post> posts = await postRepository.FindPostByTagNameAsync(existedTag.name);
+                foreach (Post post in posts)
+                {
+                    if (post.status)
+                    {
+                        postsDTO.Add(Mapper.GetMapper().Map<PostDTO>(post));
+                    }
+                }
+                return postsDTO;
+            }
+            throw new NotFoundEntityException("Not found tag with id");
         }
 
         public async Task<List<PostDTO>> GetAllPostByTopicNameAsync(string topicName)
