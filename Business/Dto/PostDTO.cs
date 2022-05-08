@@ -25,6 +25,8 @@ namespace Business.Dto
 
         public Guid topicId { get; set; }
 
+        public string topicName { get; set; }
+
         [JsonIgnore]
         public bool status { get; set; }
 

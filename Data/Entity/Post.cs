@@ -39,6 +39,9 @@ namespace Data.Entity
         [Column("topicId")]
         public Guid topicId { get; set; }
 
+        [Column("topicName")]
+        public string topicName { get; set; }
+
         [Column("Status")]
         public bool status { get; set; }
 

@@ -35,6 +35,7 @@ namespace Business.Service.impl
             createdPost.status = true;
             createdPost.createDate = DateTime.Now.ToString();
             Post insertedPost = await postRepository.AddAsync(createdPost);
+            insertedPost.topicName = existedTopic.name;
             return Mapper.GetMapper().Map<PostDTO>(insertedPost);
         }
 
@@ -90,6 +91,20 @@ namespace Business.Service.impl
             foreach(Post post in postsEnum)
             {
                 if(post.status)
+                {
+                    dtos.Add(Mapper.GetMapper().Map<PostDTO>(post));
+                }
+            }
+            return dtos;
+        }
+
+        public async Task<List<PostDTO>> GetAllPostByTopicNameAsync(string topicName)
+        {
+            List<Post> posts = await postRepository.FindPostByTopicNameAsync(topicName);
+            List<PostDTO> dtos = new List<PostDTO>();
+            foreach (Post post in posts)
+            {
+                if (post.status)
                 {
                     dtos.Add(Mapper.GetMapper().Map<PostDTO>(post));
                 }

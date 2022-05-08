@@ -1,6 +1,7 @@
 ﻿using Data.Database;
 using Data.Entity;
 using Data.Exceptions;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +38,19 @@ namespace Data.Repository.impl
             {
                 Post post = dbContext.posts.Where(post => post.title == title && post.id != id).FirstOrDefault();
                 return post;
+            }
+            catch (Exception e)
+            {
+                throw new SQLException(e.Message);
+            }
+        }
+
+        public async Task<List<Post>> FindPostByTopicNameAsync(string topicName)
+        {
+            try
+            {
+                IQueryable<Post> query = dbContext.posts.Where(post => post.topicName == topicName && post.status == true).AsNoTracking();
+                return await query.ToListAsync();
             }
             catch (Exception e)
             {

@@ -12,10 +12,12 @@ namespace API.Controller
     public class TopicController
     {
         private readonly ITopicService topicService;
+        private readonly IPostService postService;
 
-        public TopicController(ITopicService topicService)
+        public TopicController(ITopicService topicService, IPostService postService)
         {
             this.topicService = topicService;
+            this.postService = postService;
         }
 
         [HttpGet("{id}")]
@@ -53,5 +55,12 @@ namespace API.Controller
             return FactoryUtils.createResponseModel().StatusCode(200).Message("OK").Data(existedTopics).convertToJson();
         }
 
+
+        [HttpGet("{topicName}/posts/")]
+        public async Task<IActionResult> SearchPostsByTopicName(string topicName)
+        {
+            List<PostDTO> existedPosts = await postService.GetAllPostByTopicNameAsync(topicName);
+            return FactoryUtils.createResponseModel().StatusCode(200).Message("OK").Data(existedPosts).convertToJson();
+        }
     }
 }
